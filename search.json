@@ -1,0 +1,296 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html#agenda",
+    "href": "index.html#agenda",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Agenda",
+    "text": "Agenda\n\n\nMotivation: Why we need supervised dimensionality reduction\nPCA: Find directions of variance in X\nCCA: Maximize correlation between X and Y\nPLS: Maximize covariance between X and Y\nPLS-DA: Use PLS for classification tasks\nValidation: R², Q², cross-validation\nInterpretation: Loadings, scores, VIP scores\nData Integration: Multi-omics with block-wise PLS"
+  },
+  {
+    "objectID": "index.html#why-learn-pls",
+    "href": "index.html#why-learn-pls",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Why Learn PLS?",
+    "text": "Why Learn PLS?\n\n\nHigh-dimensional data: \\(p \\gg n\\)\nStrong correlations among features\nNeed interpretable predictive components\nWant to relate X (predictors) to Y (response) where both can be matrices\nOmics data (genomics, transcriptomics, proteomics)\nChemometrics and quality control\nData integration across multiple blocks (multi-omics, multi-view)"
+  },
+  {
+    "objectID": "index.html#lets-see-how-pca-works-under-the-hood",
+    "href": "index.html#lets-see-how-pca-works-under-the-hood",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Let’s see how PCA works under the hood",
+    "text": "Let’s see how PCA works under the hood\n\n\n\nPCA rotates the data so that the new axes align with the directions of maximum variance."
+  },
+  {
+    "objectID": "index.html#lets-see-how-pca-works-under-the-hood-1",
+    "href": "index.html#lets-see-how-pca-works-under-the-hood-1",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Let’s see how PCA works under the hood",
+    "text": "Let’s see how PCA works under the hood\n\n\n\nPCA rotates the data so that the new axes align with the directions of maximum variance.\n\nThis is done using covariance matrix (ellipsoid)"
+  },
+  {
+    "objectID": "index.html#lets-see-how-pca-works-under-the-hood-2",
+    "href": "index.html#lets-see-how-pca-works-under-the-hood-2",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Let’s see how PCA works under the hood",
+    "text": "Let’s see how PCA works under the hood\n\n\n\nPCA rotates the data so that the new axes align with the directions of maximum variance.\n\nThis is done using covariance matrix (ellipsoid)\n\nCalculate the major axis of the ellipsoid: compute the first eigenvector of the covariance matrix, it gives the direction of maximum variance."
+  },
+  {
+    "objectID": "index.html#lets-see-how-pca-works-under-the-hood-3",
+    "href": "index.html#lets-see-how-pca-works-under-the-hood-3",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Let’s see how PCA works under the hood",
+    "text": "Let’s see how PCA works under the hood\n\n\n\nPCA rotates the data so that the new axes align with the directions of maximum variance.\n\nThis is done using covariance matrix (ellipsoid)\n\nCalculate the major axis of the ellipsoid: compute the first eigenvector of the covariance matrix, it gives the direction of maximum variance.\nReconstruct and deflate the data: project the data onto the first principal axis, then subtract this projection to remove the explained variance and reveal the remaining structure."
+  },
+  {
+    "objectID": "index.html#lets-see-how-pca-works-under-the-hood-4",
+    "href": "index.html#lets-see-how-pca-works-under-the-hood-4",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Let’s see how PCA works under the hood",
+    "text": "Let’s see how PCA works under the hood\n\n\n\nPCA rotates the data so that the new axes align with the directions of maximum variance.\n\nThis is done using covariance matrix (ellipsoid)\n\nCalculate the major axis of the ellipsoid: compute the first eigenvector of the covariance matrix, it gives the direction of maximum variance.\nReconstruct and deflate the data: project the data onto the first principal axis, then subtract this projection to remove the explained variance and reveal the remaining structure.\nRepeat"
+  },
+  {
+    "objectID": "index.html#more-technically",
+    "href": "index.html#more-technically",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "More technically",
+    "text": "More technically\n\n\nLet \\(X \\in \\mathbb{R}^{n \\times p}\\) be mean-centered data.\n\nCompute covariance matrix\n\\[\nS = \\frac{1}{n} X^{\\mathsf T} X\n\\]\nEigen decomposition: \\(S = V \\Lambda V^{\\mathsf T}\\)\n\nColumns of \\(V\\): principal directions (eigenvectors)\n\nDiagonal of \\(\\Lambda\\): variances (eigenvalues)\n\nExtract first component: \\(w_1 = \\text{first eigenvector}, \\quad t_1 = X w_1\\)\n\n\\(t_1\\) are the PC1 scores (projection)\n\nDeflate the data\n\\[\nX^{(1)} = X - t_1 w_1^{\\mathsf T}\n\\]\nRepeat on residuals\n\nPerform PCA again on \\(X^{(1)}\\)\n\nGet \\(w_2, t_2\\), deflate again\n\nContinue until desired number of components extracted\n\n\n\nAlternative: via Singular Value Decomposition (SVD)\nSVD of \\(X\\):\n\\[\nX = U D V^{\\mathsf T}\n\\]\n\nColumns of \\(V\\): loadings (same as eigenvectors of \\(S\\))\n\nColumns of \\(U D\\): scores (principal components)\n\nThis is equivalent and numerically more stable in high dimensions."
+  },
+  {
+    "objectID": "index.html#variance-lives-on-the-diagonal",
+    "href": "index.html#variance-lives-on-the-diagonal",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Variance Lives on the Diagonal",
+    "text": "Variance Lives on the Diagonal\n\nThis is what PCA is really about it’s all sitting on the diagonal!\\[\nS = \\begin{bmatrix}\n\\color{red}{2.5} & 1.2 & 0.5 & 1.0 & 0.8 \\\\\n1.2 & \\color{red}{3.1} & 0.9 & 1.5 & 1.1 \\\\\n0.5 & 0.9 & \\color{red}{2.8} & 0.7 & 0.4 \\\\\n1.0 & 1.5 & 0.7 & \\color{red}{3.3} & 1.2 \\\\\n0.8 & 1.1 & 0.4 & 1.2 & \\color{red}{2.9}\n\\end{bmatrix}\n\\]\nDiagonal elements (in red):\n\\(\\text{Var}(X_1), \\text{Var}(X_2), \\dots, \\text{Var}(X_5)\\)\n\nOff-diagonal:\nHow features co-vary e.g., \\(\\text{Cov}(X_2, X_4) = 1.5\\)\nPCA finds a rotation of the axes such that:\n\nThe new covariance matrix is diagonal\n\nThe diagonal entries now represent the variance along the new axes\n\nPCA maximizes one diagonal value at a time\n\\[\n\\max_{w} \\quad w^{\\mathsf T} S w \\quad \\text{subject to } \\|w\\| = 1\n\\]"
+  },
+  {
+    "objectID": "index.html#what-if-we-want-to-make-pca-supervised",
+    "href": "index.html#what-if-we-want-to-make-pca-supervised",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "What if we want to make PCA supervised?",
+    "text": "What if we want to make PCA supervised?\n\nLet’s say I have another dataset \\(Y\\), and I want PCA not just to show me the directions of highest variance in \\(X\\), but rather the directions in \\(X\\) that are most useful for explaining or predicting \\(Y\\).If we want to guide the eigen decomposition algorithm using \\(Y\\), we need to incorporate information about \\(Y\\) into the square matrix (which we previously called the covariance matrix) that drives the decomposition.In PCA, this matrix is \\(X^\\top X\\), which only contains information about variance within \\(X\\). To bring \\(Y\\) into the picture, we need a new matrix that reflects how \\(X\\) and \\(Y\\) interact. One natural choice is the cross-covariance matrix \\(X^\\top Y\\), which tells us how each variable in \\(X\\) co-varies with each variable in \\(Y\\)."
+  },
+  {
+    "objectID": "index.html#the-cross-covariance-matrix",
+    "href": "index.html#the-cross-covariance-matrix",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "The Cross-Covariance Matrix",
+    "text": "The Cross-Covariance Matrix\n\n\nSuppose we have two centered datasets:\n\n\\(X \\in \\mathbb{R}^{n \\times p}\\): predictors\n\n\\(Y \\in \\mathbb{R}^{n \\times q}\\): responses\n\nWe define the cross-covariance matrix between \\(X\\) and \\(Y\\) as:\n\\[\nC_{XY} = \\frac{1}{n} X^\\top Y\n\\]\nThis matrix has shape \\(p \\times q\\), and each entry\\((i, j)\\) shows how much feature \\(X_i\\) co-varies with feature \\(Y_j\\) across the samples.\n\n\n\n         [,1]        [,2]\n[1,] 3.150913 -1.06559666\n[2,] 2.199966 -0.07108427\n[3,] 1.145256 -0.39498518\n\n\n\n\n\n\n\n\n\n\nThe cross-covariance matrix captures the linear relationships between variables in \\(X\\) and variables in \\(Y\\)\nIt contains exactly the information we want when we’re trying to find directions in \\(X\\) that are most predictive of \\(Y\\)"
+  },
+  {
+    "objectID": "index.html#fixing-the-square-matrix",
+    "href": "index.html#fixing-the-square-matrix",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Fixing the Square Matrix",
+    "text": "Fixing the Square Matrix\n\nThe cross-covariance matrix \\(X^\\top Y\\) has shape \\(p \\times q\\), so we can’t diagonalize it directly. But we can build a square matrix from it that still captures the relationship between \\(X\\) and \\(Y\\).Let’s define:\\[\nM = X^\\top Y Y^\\top X\n\\]\nThis matrix has shape \\(p \\times p\\), just like the covariance matrix \\(X^\\top X\\) in PCA.\nIt is symmetric and positive semi-definite, so we can perform eigen decomposition.\nThink of this matrix as measuring: “How strongly does each direction in \\(X\\) contribute to predicting \\(Y\\), and how redundant are those directions with each other?”"
+  },
+  {
+    "objectID": "index.html#whats-on-the-diagonal-and-off-diagonal-in-m",
+    "href": "index.html#whats-on-the-diagonal-and-off-diagonal-in-m",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "What’s on the Diagonal and Off-Diagonal in \\(M\\)",
+    "text": "What’s on the Diagonal and Off-Diagonal in \\(M\\)\n\n\nLet’s interpret the entries of \\(M = X^\\top Y Y^\\top X\\):\n\nDiagonal entries \\(M_{ii}\\) measure how strongly feature \\(X_i\\) is associated with all of Y, aggregated across all response variables and samples.\n\nIf \\(M_{11}\\) is large, it means \\(X_1\\) is very useful in predicting \\(Y\\).\nThese are signal strengths for individual features in \\(X\\).\n\nOff-diagonal entries \\(M_{ij}\\) measure shared predictive power between \\(X_i\\) and \\(X_j\\).\n\nIf \\(M_{12}\\) is large, it means \\(X_1\\) and \\(X_2\\) are both predictive of similar aspects of \\(Y\\).\nThese reflect redundancy or correlation in how features contribute to predicting \\(Y\\).\n\n\nSo in a sense:\n\nDiagonal = importance of each feature for predicting \\(Y\\)\nOff-diagonal = overlap in what features predict about \\(Y\\)"
+  },
+  {
+    "objectID": "index.html#example",
+    "href": "index.html#example",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Example",
+    "text": "Example"
+  },
+  {
+    "objectID": "index.html#example-cross-covariance",
+    "href": "index.html#example-cross-covariance",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Example (cross covariance)",
+    "text": "Example (cross covariance)\nNow we calculate the cross covariance and plot it:"
+  },
+  {
+    "objectID": "index.html#example-eigenvectors",
+    "href": "index.html#example-eigenvectors",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Example (eigenvectors)",
+    "text": "Example (eigenvectors)\n\n\n\\(X^\\top Y Y^\\top X\\) gives components in the X-space.\nTo get components in the Y-space, use \\(Y^\\top X X^\\top Y\\).\nBoth capture the same cross-covariance but in their own coordinate systems.\nRotate both \\(X\\) and \\(Y\\) to find aligned directions in each space."
+  },
+  {
+    "objectID": "index.html#final-deflation",
+    "href": "index.html#final-deflation",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Final deflation",
+    "text": "Final deflation\n\n\\[\nX_{\\text{new}} = X - \\mathbf{t} \\mathbf{p}^\\top,\n\\quad \\text{where } \\mathbf{p} = \\frac{X^\\top \\mathbf{t}}{\\mathbf{t}^\\top \\mathbf{t}}\n\\]\\[\nY_{\\text{new}} = Y - \\mathbf{t} \\mathbf{q}^\\top,\n\\quad \\text{where } \\mathbf{q} = \\frac{Y^\\top \\mathbf{t}}{\\mathbf{t}^\\top \\mathbf{t}}\n\\]\nX is deflated using its own projection \\(\\mathbf{t}\\) → removes variation already captured (as in PCA).\nY is deflated using the same \\(\\mathbf{t}\\) from X → ensures we only keep what is not yet explained by X.\nAfter we do the deflation we redo the covariance calculation and start from the beginning."
+  },
+  {
+    "objectID": "index.html#final-deflation-1",
+    "href": "index.html#final-deflation-1",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Final deflation",
+    "text": "Final deflation\n\n\n\\(X^\\top Y Y^\\top X\\) gives components in the X-space.\nTo get components in the Y-space, use \\(Y^\\top X X^\\top Y\\).\nBoth capture the same cross-covariance but in their own coordinate systems.\nRotate both \\(X\\) and \\(Y\\) to find aligned directions in each space."
+  },
+  {
+    "objectID": "index.html#projecting-x-and-y-into-latent-space-pls",
+    "href": "index.html#projecting-x-and-y-into-latent-space-pls",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Projecting X and Y into Latent Space (PLS)",
+    "text": "Projecting X and Y into Latent Space (PLS)\n\nGet the weights\nX weight (from eigen decomposition):\n\\[\n\\mathbf{w} = \\text{first eigenvector of } X^\\top Y Y^\\top X\n\\]\nY weight (aligned with \\(\\mathbf{t}\\)):\n\\[\n\\mathbf{q} = \\frac{Y^\\top \\mathbf{t}}{\\mathbf{t}^\\top \\mathbf{t}},\n\\quad \\text{where } \\mathbf{t} = X \\mathbf{w}\n\\]\nProject X and Y\nLatent score from X:\n\\[\n\\mathbf{t} = X \\mathbf{w}\n\\]\nLatent score from Y:\n\\[\n\\mathbf{u} = Y \\mathbf{q}\n\\] \\(\\mathbf{t}\\) captures direction in \\(X\\) most predictive of \\(Y\\). \\(\\mathbf{u}\\) is the matching direction in \\(Y\\), maximally aligned with \\(\\mathbf{t}\\)."
+  },
+  {
+    "objectID": "index.html#projection",
+    "href": "index.html#projection",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Projection",
+    "text": "Projection\n\nIn R we can use mixOmics package to sort out everything for us\nlibrary(mixOmics)\npls_model&lt;-pls(X = X,Y = Y,ncomp = 2)\nplotIndiv(pls_model)"
+  },
+  {
+    "objectID": "index.html#partial-least-squares-pls",
+    "href": "index.html#partial-least-squares-pls",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Partial Least Squares (PLS)",
+    "text": "Partial Least Squares (PLS)\n\n\nMaximize the covariance between \\(X\\mathbf{w}\\) and \\(Y\\mathbf{q}\\)\nLearn latent components that are predictive and low-dimensional\nLet:\n\\(\\mathbf{w}\\): weight vector in \\(X\\)-space\n\\(\\mathbf{q}\\): weight vector in \\(Y\\)-space\n\\(\\mathbf{t} = X \\mathbf{w}\\): latent score from \\(X\\)\n\\(\\mathbf{u} = Y \\mathbf{q}\\): latent score from \\(Y\\)\n\\[\n\\max_{\\|\\mathbf{w}\\| = 1, \\|\\mathbf{q}\\| = 1} \\; \\text{Cov}(X \\mathbf{w}, Y \\mathbf{q}) = \\mathbf{w}^\\top X^\\top Y \\mathbf{q}\n\\]Latent components:\\[\n  \\mathbf{T} = X \\mathbf{W}, \\quad \\mathbf{U} = Y \\mathbf{Q}\n  \\] * Can be used for regression:\\[\n  Y \\approx \\mathbf{T} \\mathbf{B}, \\quad \\text{where } \\mathbf{B} = (\\mathbf{T}^\\top \\mathbf{T})^{-1} \\mathbf{T}^\\top Y\n  \\]"
+  },
+  {
+    "objectID": "index.html#validation-of-pls",
+    "href": "index.html#validation-of-pls",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Validation of PLS",
+    "text": "Validation of PLS\n\n\nLike any other supervised method, we must validate PLS before interpreting or using it for prediction.\nWe typically assess:\nR²X — Explained Variance in X\n\\[\nR^2_X = \\frac{\\text{Variance explained by the components in } X}{\\text{Total variance in } X}\n\\]\n\nShows how well the model summarizes the predictors.\n\nR²Y:Explained Variance in Y\n\\[\nR^2_Y = \\frac{\\text{Variance explained by the components in } Y}{\\text{Total variance in } Y}\n\\]\n\nReflects how well \\(Y\\) is fitted by the model.\nHigher \\(R^2_Y\\) means better in-sample fit.\n\n\nQ²: Predictive Ability (Cross-Validated \\(R^2_Y\\))\n\\[\nQ^2 = 1 - \\frac{\\sum_{k=1}^{Q} \\text{PRESS}^h_k}{\\sum_{k=1}^{Q} \\text{RSS}^0_k}\n\\]\nWhere:\n\n\\(\\text{PRESS}^h_k = \\sum_{i=1}^{n} (y_i^{(h)} - \\hat{y}_i^{(h)(-i)})^2\\): Prediction error for each Y-variable \\(k\\) using leave-one-out or K-fold CV.\n\\(\\text{RSS}^0_k = \\sum_{i=1}^{n} (y_i^{(h)} - \\bar{y}_k)^2\\): Residual sum of squares using the mean of Y as predictor (null model).\n\nThis \\(Q^2\\) assesses the marginal contribution of component \\(h\\) to the model’s predictive power, as defined by Tenenhaus (1998) and implemented by Chavent & Patouille (2003).\nA rule of thumb:\n\\[\nQ^2 \\geq 1 - 0.95^2 = 0.0975\n\\]\nmeans the component contributes meaningfully to prediction."
+  },
+  {
+    "objectID": "index.html#validation-of-pls-1",
+    "href": "index.html#validation-of-pls-1",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Validation of PLS",
+    "text": "Validation of PLS\n\n\npls_model&lt;-pls(X = X,Y = Y,ncomp =3,mode = \"regression\",scale = FALSE)\nperf_pls&lt;-perf(pls_model,validation = \"loo\")\nprint(1-cumprod(1-perf_pls$measures$Q2.total$values$value))\n\n[1] 0.4237092 0.7695074 0.7875983\n\nplot(perf_pls,\"Q2.total\")"
+  },
+  {
+    "objectID": "index.html#variable-importance-vip",
+    "href": "index.html#variable-importance-vip",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Variable importance (VIP)",
+    "text": "Variable importance (VIP)\n\n\nVIP scores tell us how important each predictor (X-variable) is in explaining or predicting the outcome Y.\nIt combines:\n\nHow much each component explains Y (via \\(R^2_Y\\))\nHow strongly each variable contributes to the components (via squared loadings \\(w_{jh}^2\\))\n\n\\[\n\\text{VIP}_j = \\sqrt{p \\cdot \\sum_{h=1}^{H} \\left( \\frac{R^2_{Y,h}}{\\sum_{h=1}^{H} R^2_{Y,h}} \\cdot w_{jh}^2 \\right)}\n\\]Where:\n\\(p\\): number of variables in X\n\\(H\\): number of components\n\\(R^2_{Y,h}\\): how well component \\(h\\) explains Y\n\\(w_{jh}\\): loading (weight) of variable \\(j\\) in component \\(h\\)\n\n✔ VIP &gt; 1 → variable is important ✘ VIP &lt; 1 → less contribution to prediction"
+  },
+  {
+    "objectID": "index.html#example-in-r",
+    "href": "index.html#example-in-r",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Example in R",
+    "text": "Example in R\n\n\nvip_pls_model&lt;-vip(pls_model)\nprint(vip_pls_model)\n\n       comp1     comp2     comp3\nX1 1.1670428 1.2144690 1.1956095\nX2 0.8706446 0.9035354 0.9128069\nX3 0.9380773 0.8418366 0.8586626"
+  },
+  {
+    "objectID": "index.html#pls",
+    "href": "index.html#pls",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "PLS",
+    "text": "PLS\n\n\nPLS is a supervised projection method: Finds directions in \\(X\\) that best predict \\(Y\\).\nIt handles:\n\nCollinearity in predictors\nMultivariate responses\nHigh-dimensional data (\\(p \\gg n\\))\n\nOutputs:\n\nLatent components \\(\\mathbf{T} = XW\\)\nRegression model \\(Y \\approx \\mathbf{T}B\\)\n\nCan be validated using: \\(R^2_X\\), \\(R^2_Y\\), and \\(Q^2\\)"
+  },
+  {
+    "objectID": "index.html#partial-least-squares-discriminant-analysis-pls-da",
+    "href": "index.html#partial-least-squares-discriminant-analysis-pls-da",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Partial Least Squares Discriminant Analysis (PLS-DA)",
+    "text": "Partial Least Squares Discriminant Analysis (PLS-DA)\n\n\nPLS-DA is just PLS applied to a categorical Y\n\nWe encode class labels as dummy variables (e.g., one-hot)\n\nThe rest is the same:\n\nUse PLS to find components that best separate classes\nProjection is guided by supervised information\n\nInstead of \\(R^2_Y\\), we evaluate using:\n\nAccuracy, AUC, confusion matrix, cross-validation error\n\n\n\n\nSample\nClass Label\nOne-Hot Encoded \\(Y\\)\n\n\n\n\n1\nA\n(1, 0, 0)\n\n\n2\nB\n(0, 1, 0)\n\n\n3\nC\n(0, 0, 1)\n\n\n4\nA\n(1, 0, 0)"
+  },
+  {
+    "objectID": "index.html#example-in-r-1",
+    "href": "index.html#example-in-r-1",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Example in R",
+    "text": "Example in R\n\nI have simulated some data based on 3 classes and the idea is to see if we can “separate” the classes using PLSDA\nplsda_model&lt;-plsda(X,class_labels)\nplotIndiv(plsda_model)"
+  },
+  {
+    "objectID": "index.html#model-validation",
+    "href": "index.html#model-validation",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Model validation",
+    "text": "Model validation\n\nDo NOT trust PLSDA scores. Always validate your model using cross validation\nplsda_model_perf&lt;-perf(plsda_model)\nplot(plsda_model_perf)"
+  },
+  {
+    "objectID": "index.html#x-y-space-and-prediction",
+    "href": "index.html#x-y-space-and-prediction",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "X, Y space and prediction",
+    "text": "X, Y space and prediction\n\nWe use a distance matrix in \\(Y\\) to do classification! When a new sample comes. we first project to \\(X\\) then from \\(X\\)-space to \\(Y\\) using regression (PLS) and measure the distances to the center of the classes. The closest one will be the predicted classes.\npar(mfrow=c(1,2))\nplot(plsda_model$variates$X,col=as.factor(class_labels),main=\"X\")\nplot(plsda_model$variates$Y,col=as.factor(class_labels),main=\"Y\")"
+  },
+  {
+    "objectID": "index.html#variable-selection",
+    "href": "index.html#variable-selection",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Variable selection",
+    "text": "Variable selection\n\n\nIn mixOmics, the correlation plot shows how strongly each variable in \\(X\\) is correlated with the PLS-DA components.\nVariables with high absolute correlation are likely important for discriminating between classes.\nYou can use this to visually select variables that contribute most to class separation.\nWorks well with sparse PLS-DA (splsda) to highlight variables with strongest group-specific signals.\n\nplotVar(plsda_model)"
+  },
+  {
+    "objectID": "index.html#multiomics-data-diablo",
+    "href": "index.html#multiomics-data-diablo",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Multiomics data (DIABLO)",
+    "text": "Multiomics data (DIABLO)\n\n\nA multiblock extension of PLS for integrating multiple datasets (e.g., transcriptomics, proteomics, metabolomics).\nLearns components for each dataset that:\n\nPredict the outcome (Y), and\nAre maximally correlated across datasets, based on prior expectations."
+  },
+  {
+    "objectID": "index.html#pls-for-multiomics-data",
+    "href": "index.html#pls-for-multiomics-data",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "PLS for multiomics data",
+    "text": "PLS for multiomics data\n\nLet’s say we have 3 datasets \\(A\\), \\(B\\) and \\(C\\). and we have \\(Y\\) (our outcome) We do PLS on each dataset separate and extract only the first components for each dataset:\\[\nt_A^{(1)},\\ t_B^{(1)},\\ t_C^{(1)}\\ \\text{(from PLS)}\n\\]Let’s say we want to guide each dataset’s component using how much we expect it to co-vary with the others.\nThis is called in the design matrix \\(C\\):\\[\nC =\n\\begin{bmatrix}\n0 & 1 & 0.5 \\\\\n1 & 0 & 0.2 \\\\\n0.5 & 0.2 & 0\n\\end{bmatrix}\n\\]Weighted combination (for sample \\(i\\)) give us an average score:\\[\nz_i^{(q)} = \\sum_{k \\neq q} C_{qk} \\cdot t_i^{(k)}\n\\]"
+  },
+  {
+    "objectID": "index.html#pls-for-multiomics-data-1",
+    "href": "index.html#pls-for-multiomics-data-1",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "PLS for multiomics data",
+    "text": "PLS for multiomics data\n\nTo update loadings for dataset \\(q\\), we compute:\\[\nw_q^{\\text{new}} = \\frac{X_q^\\top z^{(q)}}{\\| X_q^\\top z^{(q)} \\|}\n\\]We compute the new latent component:\\[\nt_q^{\\text{new}} = X_q w_q^{\\text{new}}\n\\]This is the projected value of each sample in dataset \\(q\\) along the new direction. We use these set of scores and weights for deflating the original datasets. The idea is that we want to explain variance in \\(Y\\) using the shared information across the datasets!"
+  },
+  {
+    "objectID": "index.html#diablo-in-r",
+    "href": "index.html#diablo-in-r",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "DIABLO in R",
+    "text": "DIABLO in R\n\nI have simulate two more datasets now we have \\(X\\), \\(X2\\) and \\(X3\\):\n# Create named list for DIABLO\ndata_list &lt;- list(X1 = X, X2 = X2, X3 = X3)\n\n# create design matrix:\n\ndesign &lt;- matrix(c(0, 0.8, 0.5,\n                   0.8, 0, 0.3,\n                   0.5, 0.3, 0), nrow = 3)\n\nprint(design)\n\n     [,1] [,2] [,3]\n[1,]  0.0  0.8  0.5\n[2,]  0.8  0.0  0.3\n[3,]  0.5  0.3  0.0"
+  },
+  {
+    "objectID": "index.html#diablo-in-r-1",
+    "href": "index.html#diablo-in-r-1",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "DIABLO in R",
+    "text": "DIABLO in R\n\nWe can check whether the correlation between components from each data set has been maximised as specified in the design matrix.\ndiablo_model &lt;- block.plsda(X = data_list, Y = class_labels, design = design, ncomp = 2)\nplotDiablo(diablo_model, ncomp = 1)"
+  },
+  {
+    "objectID": "index.html#diablo-in-r-2",
+    "href": "index.html#diablo-in-r-2",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "DIABLO in R",
+    "text": "DIABLO in R\n\nWe can project each sample into the space spanned by the components of each block. Clustering of the samples can be better assessed with this plot.\ndiablo_model &lt;- block.plsda(X = data_list, Y = class_labels, design = design, ncomp = 2)\nplotIndiv(diablo_model)"
+  },
+  {
+    "objectID": "index.html#validation",
+    "href": "index.html#validation",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Validation",
+    "text": "Validation\n\nSimilar to PLS-DA, DIABLO model must be validated. The predictions however are now average prediction or majority of votes between different datasets.\ndiablo_model_perf &lt;- perf(diablo_model)\n\nplot(diablo_model_perf)"
+  },
+  {
+    "objectID": "index.html#similarities-across-modalities",
+    "href": "index.html#similarities-across-modalities",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Similarities across modalities",
+    "text": "Similarities across modalities\n\nThe best starting point to evaluate the correlation structure between variables is with the correlation circle plot.\nplotVar(diablo_model, var.names = FALSE, \n        style = 'graphics', legend = TRUE,\n        pch = c(16, 17, 15), cex = c(2,2,2), \n        col = c('darkorchid', 'brown1', 'lightgreen'))"
+  },
+  {
+    "objectID": "index.html#diablo",
+    "href": "index.html#diablo",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "DIABLO",
+    "text": "DIABLO\n\n\nDIABLO is a supervised multiblock method that:\n\nLearns components per dataset\nAligns them using a design matrix\nOptimizes both prediction and cross-dataset agreement\n\nThe design matrix is the core controller:\n\nHigh values = enforce agreement between datasets\nZero = no alignment required\n\nValidation = like PLS-DA, but across all blocks\nVariable plots (e.g., plotVar, network) help interpret shared vs unique signals"
+  },
+  {
+    "objectID": "index.html#final-thoughts-practical-tips",
+    "href": "index.html#final-thoughts-practical-tips",
+    "title": "Partial Least Squares (PLS) regression",
+    "section": "Final Thoughts & Practical Tips",
+    "text": "Final Thoughts & Practical Tips\n\n\n\nAlways center and scale your data\nChoose number of components via cross-validation or use mixOmics tuning function\nIn DIABLO, define a meaningful design matrix\nValidate using perf(), check stability and predictive performance\nBe cautious of overfitting, especially with small sample sizes\n\nset.seed(123)\nn_samples &lt;- 1000\nn_vars &lt;- 2000\n\nX_random &lt;- matrix(rnorm(n_samples * n_vars), nrow = n_samples, ncol = n_vars)\n\n# Assign random class labels (3 classes)\nY_random &lt;- factor(sample(c(\"A\", \"B\", \"C\"), size = n_samples, replace = TRUE))\n\n# Fit PLS-DA model\nplsda_random &lt;- plsda(X_random, Y_random, ncomp = 2)\n\n# Plot the sample projection\nplotIndiv(plsda_random, comp = 1:2, \n          group = Y_random, \n          legend = TRUE, \n          title = \"PLS-DA on Random Data\")"
+  }
+]
